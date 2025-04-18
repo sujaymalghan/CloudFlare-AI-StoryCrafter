@@ -1,1 +1,1 @@
-# CloudFlare-AI StroyCrafter
+# CloudFlare-AI StoryCrafter
