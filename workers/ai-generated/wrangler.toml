@@ -1,0 +1,12 @@
+# wrangler.toml
+name = "ai-story-generator"
+main = "src/index.ts"
+compatibility_date = "2023-10-30"
+workers_dev = true
+account_id = "45b35c3ca8983c590c806bd2b6daf86d"
+
+[vars]
+CF_API_TOKEN = "p7ThtPk7Izr0Uc0Ils0jJawrFTtusGwYN_iR05n7"
+
+[ai]
+binding = "AI"   
