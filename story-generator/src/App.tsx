@@ -13,22 +13,30 @@ function App() {
   const generateStory = async (prompt: string) => {
     setLoading(true);
     setError(null);
-    
-    setTimeout(() => {
-      try {
-        const fakeData: StoryData = {
-          story: `Once upon a time, in response to "${prompt}", there was a magical world...`,
-          imageUrl: "/api/placeholder/400/320" // Placeholder image
-        };
-        
-        setStoryData(fakeData);
-      } catch (err) {
-        console.error('Error:', err);
-        setError('Failed to generate story. Please try again.');
-      } finally {
-        setLoading(false);
+  
+    try {
+      const response = await fetch("https://ai-story-generator.sujayvmalghan.workers.dev/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: prompt }),
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Server error: ${response.status} - ${errorText}`);
       }
-    }, 2000);
+  
+      const data: StoryData = await response.json();
+  console.log("Generated story data:", data);
+      setStoryData(data);
+    } catch (err) {
+      console.error("Error:", err);
+      setError(`Failed to generate story: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
